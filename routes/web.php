@@ -17,10 +17,10 @@ use App\Http\Controllers\auth\authRegister;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])
-->name('home');
-Route::post('/', [authLogin::class, 'checkLogin'])->name('login');
-Route::get('/course/{id}', [CourseController::class, 'index'])->name('course')->middleware('isLogin');
-Route::get('/logout', [authLogin::class, 'Logout'])->name('logout');
-Route::get('/register', [RegisterController::class, 'index'])->name('register_view');
-Route::post('/register', [authRegister::class, 'register'])->name('register');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/', [authLogin::class, 'checkLogin'])->name('login')->middleware('guest');
+Route::get('/course', [CourseController::class, 'index'])->name('course')->middleware('auth');
+Route::get('/logout', [authLogin::class, 'Logout'])->name('logout')->middleware('auth');
+Route::get('/register', [RegisterController::class, 'index'])->name('register_view')->middleware('guest');
+Route::post('/register', [authRegister::class, 'register'])->name('register')->middleware('guest');
+Route::post('/course', [CourseController::class, 'createVocabulary'])->name('create_vocabulary')->middleware('auth');

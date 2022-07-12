@@ -4,17 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Vocabulary;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
-    public function index($id)
+    public function index()
     {
-        $vocabularies = Vocabulary::where('user_id','=',$id)->get();
-        return view('course.index', ['vocabularies' => $vocabularies,
-                                     'user_id' => $id]);
+        $vocabularies = Vocabulary::whereUserId(Auth::id())->get();
+        return view('course.index', [
+            'vocabularies' => $vocabularies
+        ]);
     }
-    public function create_vocabulary()
+    public function createVocabulary(Request $request)
     {
-        return view('course.create_vocabulary');
+
+        $request->validate([
+            'word' => 'required|string|max:255',
+            'mean' => 'required|string|max:255',
+            'example' => 'required|string|max:255',
+        ]);
+        $vocabulary = Vocabulary::create([
+            'user_id' => Auth::id(),
+            'word' => $request->word,
+            'meaning' => $request->mean,
+            'example' => $request->example
+        ]);
+        return redirect()->back();
     }
 }

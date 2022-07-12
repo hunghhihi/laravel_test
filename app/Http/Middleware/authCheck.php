@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class authCheck
 {
@@ -17,7 +18,7 @@ class authCheck
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!Session::has('login_id')){
+        if (!Auth::check()) {
             return redirect('/')->with('error', 'You must login first');
         }
         return $next($request);
