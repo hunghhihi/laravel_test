@@ -1,5 +1,6 @@
 <x-layout>
     <x-sidebar />
+    
         @if(!Auth::check())
             <div class="text">
                 <h2>Welcome to my Wesite</h2>

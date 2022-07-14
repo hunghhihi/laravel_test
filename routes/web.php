@@ -23,4 +23,5 @@ Route::get('/course', [CourseController::class, 'index'])->name('course')->middl
 Route::get('/logout', [authLogin::class, 'Logout'])->name('logout')->middleware('auth');
 Route::get('/register', [RegisterController::class, 'index'])->name('register_view')->middleware('guest');
 Route::post('/register', [authRegister::class, 'register'])->name('register')->middleware('guest');
+Route::get('/course/create', [CourseController::class, 'create'])->name('create_course')->middleware('auth');
 Route::post('/course', [CourseController::class, 'createVocabulary'])->name('create_vocabulary')->middleware('auth');
